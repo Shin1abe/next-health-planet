@@ -18,9 +18,9 @@ type Props = {
 
 const HPTbale = (props: Props) => {
   const { data } = props
-  const tdata: InnerScanOutData[] = data.sort((a, b) =>
-    b.date.localeCompare(a.date)
-  )
+  const tdata: InnerScanOutData[] = data
+    ? data.sort((a, b) => b.date.localeCompare(a.date))
+    : []
 
   return (
     <>
@@ -37,12 +37,10 @@ const HPTbale = (props: Props) => {
           <Tbody>
             {tdata.map((item, index) => (
               <Tr key={index}>
-                <Td >
-                  {moment(item.date, 'YYYYMMDDHHmm').format('MM/DD ddd')}
-                </Td>
-                <Td >{item.weight}</Td>
-                <Td >{item.bodyFatPct}</Td>
-                <Td >{item.steps}</Td>
+                <Td>{moment(item.date, 'YYYYMMDDHHmm').format('MM/DD ddd')}</Td>
+                <Td>{item.weight}</Td>
+                <Td>{item.bodyFatPct}</Td>
+                <Td>{item.steps}</Td>
               </Tr>
             ))}
           </Tbody>

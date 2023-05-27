@@ -5,16 +5,18 @@ import { InnerScanOutData } from './InnerScanTable'
 
 // propsの型を定義
 type Props = {
-  sex?: string,
+  sex?: string
   data?: InnerScanOutData[]
 }
 
 //参考
 // https://echarts.apache.org/examples/en/index.html#chart-type-bar
 
-const LineChart = (props: Props) => {
-  const { data ,sex} = props
-  data.sort((a, b) => a.date.localeCompare(b.date))
+const LineChart: FC<Props> = (props) => {
+  const { data, sex } = props
+  if (data) {
+    data.sort((a, b) => a.date.localeCompare(b.date))
+  }
 
   const options = {
     tooltip: {
@@ -39,9 +41,11 @@ const LineChart = (props: Props) => {
     },
     xAxis: {
       type: 'category',
-      data: data.map((data) =>(
-        moment(data.date, 'YYYYMMDDHHmm').format('MM/DD ddd'))
-      ),
+      data:
+        data &&
+        data.map((data) =>
+          moment(data.date, 'YYYYMMDDHHmm').format('MM/DD ddd')
+        ),
       axisTick: {
         alignWithLabel: true,
       },
@@ -86,7 +90,7 @@ const LineChart = (props: Props) => {
       {
         type: 'line',
         name: 'weight',
-        data: data.map((item) => item.weight),
+        data: data && data.map((item) => item.weight),
         smooth: true,
         xAxisIndex: 0,
         yAxisIndex: 0,
@@ -100,7 +104,7 @@ const LineChart = (props: Props) => {
       {
         type: 'line',
         name: 'bodyFatPct',
-        data: data.map((item) => item.bodyFatPct),
+        data: data && data.map((item) => item.bodyFatPct),
         smooth: true,
         xAxisIndex: 0,
         yAxisIndex: 1,
@@ -135,7 +139,7 @@ const LineChart = (props: Props) => {
       {
         type: 'bar',
         name: 'steps',
-        data: data.map((item) => item.steps),
+        data: data && data.map((item) => item.steps),
         smooth: true,
         xAxisIndex: 0,
         yAxisIndex: 2,
