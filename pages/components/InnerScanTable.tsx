@@ -79,8 +79,8 @@ const InnerScanTable = (props: Props) => {
         }
         return acc
       }, [])
-      // sort
-      // .sort((a, b) => a.date.localeCompare(b.date))
+    // sort
+    // .sort((a, b) => a.date.localeCompare(b.date))
     setData(outputData)
     setHeight(height)
     setSex(sex)
@@ -89,24 +89,25 @@ const InnerScanTable = (props: Props) => {
 
   return (
     <Stack direction="column">
-      <h3><b>Health Planet Dashboard</b></h3>
+      <h3>
+        <b>Health Planet Dashboard</b>
+      </h3>
       <Box fontSize={11}>
         身長 ：{Height}cm、性別 ：{Sex === 'male' ? '男性' : '女性'}、誕生日：
         {Birth_date}{' '}
       </Box>
       <Box p="4">
-        <LineChart data={data} sex={sex}/>
-        <Text fontSize={13}>体脂肪率基準（40-59歳）：
-        {Sex === 'male' ?
-          "男（標準：12-17、標準+：18-22）"
-          :
-          "女（標準：22-28、標準+：29-35）"
-        }
-          </Text>
+        <LineChart data={data} sex={sex} />
+        <Text fontSize={13}>
+          体脂肪率基準（40-59歳）：
+          {Sex === 'male'
+            ? '男（標準：12-17、標準+：18-22）'
+            : '女（標準：22-28、標準+：29-35）'}
+        </Text>
       </Box>
-      <Box p="1" mt="1">
+      {/* <Box p="1" mt="1">
         <HPTbale data={data} />
-      </Box>
+      </Box> */}
     </Stack>
   )
 }
