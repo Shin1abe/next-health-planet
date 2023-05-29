@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:proxy": "local-ssl-proxy --key ./cert/server.key --cert ./cert/server.crt --source 443 --target 3000",
+    "dev:proxy": "local-ssl-proxy --key ./cert/localhost_server.key --cert ./cert/localhost_server.crt --source 443 --target 3000",
     "build": "next build",
     "start": "next start",
     "type-check": "tsc"
