@@ -85,7 +85,7 @@ const InnerScanTable = (props: Props) => {
     setHeight(height)
     setSex(sex)
     setBirth_date(birth_date)
-  }, [height, sex, birth_date, datas])
+  }, [height, sex, birth_date, datas,data])
 
   return (
     <Stack direction="column">
