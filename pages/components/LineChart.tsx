@@ -26,13 +26,29 @@ const LineChart: FC<Props> = (props) => {
       },
     },
     toolbox: {
+      show: true,
       feature: {
-        dataView: { show: true, readOnly: false },
-        magicType: { show: true, type: ['line', 'bar'] },
-        // restore: { show: true },
-        saveAsImage: { show: true },
-      },
+        // dataZoom: {
+        //   yAxisIndex: "none"
+        // },
+        dataView: {
+          readOnly: false
+        },
+        magicType: {
+          type: ["line", "bar"]
+        },
+        // restore: {},
+        saveAsImage: {}
+      }
     },
+    // toolbox: {
+    //   feature: {
+    //     dataView: { show: true, readOnly: false },
+    //     magicType: { show: true, type: ['line', 'bar'] },
+    //     // restore: {  },
+    //     saveAsImage: { show: true },
+    //   },
+    // },
     // title: {
     //   text: 'Weight / Body Fat Percentage / Step',
     // },
@@ -56,9 +72,9 @@ const LineChart: FC<Props> = (props) => {
       {
         name: '体重',
         type: 'value',
-        // position: 'right',
-        // alignTicks: true,
-        // scale: true,
+        position: 'left',
+        alignTicks: true,
+        scale: true,
         min: sex === 'male' ? 69 : 53,
         interval: 0.5,
         axisLabel: {
@@ -68,8 +84,8 @@ const LineChart: FC<Props> = (props) => {
       {
         name: '体脂肪率',
         type: 'value',
-        // position: 'right',
-        // offset: 50,
+        position: 'left',
+        offset: 50,
         alignTicks: true,
         min: sex === 'male' ? 20 : 30,
         interval: 1,
@@ -80,11 +96,11 @@ const LineChart: FC<Props> = (props) => {
       {
         name: '歩数',
         type: 'value',
-        offset: 40,
+        offset: 30,
         min: 3,
         interval: 5,
         axisLabel: {
-          formatter: '{value} 千歩',
+          formatter: '{value} ks',
         },
       },
     ],
@@ -145,6 +161,27 @@ const LineChart: FC<Props> = (props) => {
         smooth: true,
         xAxisIndex: 0,
         yAxisIndex: 2,
+        markLine: {
+          data: [
+            { type: 'average', name: 'Avg' },
+            [
+              {
+                symbol: 'none',
+                x: 'max',
+                yAxis: 'min',
+              },
+              {
+                symbol: 'circle',
+                label: {
+                  position: 'start',
+                  formatter: 'min',
+                },
+                type: 'min',
+                name: '最低点',
+              },
+            ],
+          ],
+        },
       },
     ],
     dataZoom: [
