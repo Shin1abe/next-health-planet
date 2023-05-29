@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 import axios from 'axios'
 import querystring from 'query-string'
 import moment from 'moment'
-import { Box,  Stack, Text } from '@chakra-ui/react'
+import { Box, Stack, Text } from '@chakra-ui/react'
 import LineChart from './LineChart'
 // import HPTbale from './HPTbale'
 
@@ -85,7 +85,7 @@ const InnerScanTable = (props: Props) => {
     setHeight(height)
     setSex(sex)
     setBirth_date(birth_date)
-  }, [height, sex, birth_date, datas,data])
+  }, [height, sex, birth_date, datas])
 
   return (
     <Stack direction="column">
@@ -98,7 +98,7 @@ const InnerScanTable = (props: Props) => {
       </Box>
       <Box p="4">
         <LineChart data={data} sex={sex} />
-        <Text fontSize={13}>
+        <Text fontSize={11}>
           体脂肪率基準（40-59歳）：
           {Sex === 'male'
             ? '男（標準：12-17、標準+：18-22）'

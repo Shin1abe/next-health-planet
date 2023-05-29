@@ -37,7 +37,8 @@ const LineChart: FC<Props> = (props) => {
     //   text: 'Weight / Body Fat Percentage / Step',
     // },
     legend: {
-      data: ['weight', 'bodyFatPct', 'steps'],
+      data: ['体重', '体脂肪率', '歩数'],
+      left: 'auto',
     },
     xAxis: {
       type: 'category',
@@ -53,11 +54,11 @@ const LineChart: FC<Props> = (props) => {
     },
     yAxis: [
       {
-        name: 'weight',
+        name: '体重',
         type: 'value',
-        position: 'right',
-        alignTicks: true,
-        scale: true,
+        // position: 'right',
+        // alignTicks: true,
+        // scale: true,
         min: sex === 'male' ? 69 : 53,
         interval: 0.5,
         axisLabel: {
@@ -65,10 +66,10 @@ const LineChart: FC<Props> = (props) => {
         },
       },
       {
-        name: 'bodyFatPct',
+        name: '体脂肪率',
         type: 'value',
-        position: 'right',
-        offset: 80,
+        // position: 'right',
+        // offset: 50,
         alignTicks: true,
         min: sex === 'male' ? 20 : 30,
         interval: 1,
@@ -77,19 +78,20 @@ const LineChart: FC<Props> = (props) => {
         },
       },
       {
-        name: 'steps',
+        name: '歩数',
         type: 'value',
-        min: 3000,
-        interval: 5000,
+        offset: 40,
+        min: 3,
+        interval: 5,
         axisLabel: {
-          formatter: '{value} steps',
+          formatter: '{value} 千歩',
         },
       },
     ],
     series: [
       {
         type: 'line',
-        name: 'weight',
+        name: '体重',
         data: data && data.map((item) => item.weight),
         smooth: true,
         xAxisIndex: 0,
@@ -103,7 +105,7 @@ const LineChart: FC<Props> = (props) => {
       },
       {
         type: 'line',
-        name: 'bodyFatPct',
+        name: '体脂肪率',
         data: data && data.map((item) => item.bodyFatPct),
         smooth: true,
         xAxisIndex: 0,
@@ -114,32 +116,32 @@ const LineChart: FC<Props> = (props) => {
             { type: 'min', name: 'Min' },
           ],
         },
-        markLine: {
-          data: [
-            { type: 'average', name: 'Avg' },
-            [
-              {
-                symbol: 'none',
-                x: '80%',
-                yAxis: 'min',
-              },
-              {
-                symbol: 'circle',
-                label: {
-                  position: 'start',
-                  formatter: 'min',
-                },
-                type: 'min',
-                name: '最低点',
-              },
-            ],
-          ],
-        },
+        // markLine: {
+        //   data: [
+        //     { type: 'average', name: 'Avg' },
+        //     [
+        //       {
+        //         symbol: 'none',
+        //         x: '80%',
+        //         yAxis: 'min',
+        //       },
+        //       {
+        //         symbol: 'circle',
+        //         label: {
+        //           position: 'start',
+        //           formatter: 'min',
+        //         },
+        //         type: 'min',
+        //         name: '最低点',
+        //       },
+        //     ],
+        //   ],
+        // },
       },
       {
         type: 'bar',
-        name: 'steps',
-        data: data && data.map((item) => item.steps),
+        name: '歩数',
+        data: data && data.map((item) => item.steps / 1000),
         smooth: true,
         xAxisIndex: 0,
         yAxisIndex: 2,
