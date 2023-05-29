@@ -4,9 +4,9 @@ import { GetServerSideProps } from 'next'
 import axios from 'axios'
 import querystring from 'query-string'
 import moment from 'moment'
-import { Box, Center, Stack, Text } from '@chakra-ui/react'
+import { Box,  Stack, Text } from '@chakra-ui/react'
 import LineChart from './LineChart'
-import HPTbale from './HPTbale'
+// import HPTbale from './HPTbale'
 
 // Helth Planet API 取得結果
 type InnerScanData = {
