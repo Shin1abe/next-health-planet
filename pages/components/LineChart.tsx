@@ -41,17 +41,6 @@ const LineChart: FC<Props> = (props) => {
         saveAsImage: {}
       }
     },
-    // toolbox: {
-    //   feature: {
-    //     dataView: { show: true, readOnly: false },
-    //     magicType: { show: true, type: ['line', 'bar'] },
-    //     // restore: {  },
-    //     saveAsImage: { show: true },
-    //   },
-    // },
-    // title: {
-    //   text: 'Weight / Body Fat Percentage / Step',
-    // },
     legend: {
       data: ['体重', '体脂肪率', '歩数'],
       left: 'auto',
@@ -66,7 +55,6 @@ const LineChart: FC<Props> = (props) => {
       axisTick: {
         alignWithLabel: true,
       },
-      // data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     },
     yAxis: [
       {
@@ -96,7 +84,7 @@ const LineChart: FC<Props> = (props) => {
       {
         name: '歩数',
         type: 'value',
-        offset: 30,
+        offset: 5,
         min: 3,
         interval: 5,
         axisLabel: {
@@ -132,27 +120,6 @@ const LineChart: FC<Props> = (props) => {
             { type: 'min', name: 'Min' },
           ],
         },
-        // markLine: {
-        //   data: [
-        //     { type: 'average', name: 'Avg' },
-        //     [
-        //       {
-        //         symbol: 'none',
-        //         x: '80%',
-        //         yAxis: 'min',
-        //       },
-        //       {
-        //         symbol: 'circle',
-        //         label: {
-        //           position: 'start',
-        //           formatter: 'min',
-        //         },
-        //         type: 'min',
-        //         name: '最低点',
-        //       },
-        //     ],
-        //   ],
-        // },
       },
       {
         type: 'bar',
@@ -198,12 +165,12 @@ const LineChart: FC<Props> = (props) => {
   }
 
   return (
-    <>
-      <ReactECharts 
-      option={options} 
-      style={{height: '400px', width: '100%'}}
-      className='echarts-for-echarts'/>
-    </>
+<div >
+<ReactECharts 
+  option={options} 
+  style={{height: '600px', width: '900px'}}
+/>
+</div>
   )
 }
 
