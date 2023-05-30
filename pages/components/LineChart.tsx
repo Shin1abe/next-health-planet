@@ -199,7 +199,10 @@ const LineChart: FC<Props> = (props) => {
 
   return (
     <>
-      <ReactECharts option={options} />
+      <ReactECharts 
+      option={options} 
+      style={{height: '400px', width: '100%'}}
+      className='echarts-for-echarts'/>
     </>
   )
 }
