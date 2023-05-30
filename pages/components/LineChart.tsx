@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
 import ReactECharts from 'echarts-for-react'
 import moment from 'moment'
 import { InnerScanOutData } from './InnerScanTable'
@@ -17,6 +17,32 @@ const LineChart: FC<Props> = (props) => {
   if (data) {
     data.sort((a, b) => a.date.localeCompare(b.date))
   }
+
+  const chartRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const resizeChart = () => {
+      if (chartRef.current) {
+        const chartWidth = chartRef.current.clientWidth
+        const calculatedWidth = Math.max(chartWidth, data.length * 50)
+        chartRef.current.style.width = `${calculatedWidth}px`
+      }
+    }
+
+    resizeChart()
+
+    const observer = new ResizeObserver(resizeChart)
+    if (chartRef.current) {
+      observer.observe(chartRef.current)
+    }
+
+    return () => {
+      if (chartRef.current) {
+        observer.unobserve(chartRef.current)
+      }
+    }
+  }, [data])
+
 
   const options = {
     tooltip: {
@@ -165,12 +191,12 @@ const LineChart: FC<Props> = (props) => {
   }
 
   return (
-<div >
-<ReactECharts 
-  option={options} 
-  style={{height: '600px', width: '900px'}}
-/>
-</div>
+    <div ref={chartRef} style={{ overflowX: 'auto' }}>
+      <ReactECharts 
+        option={options} 
+        style={{ height: '400px', minWidth: '100%' }}
+      />
+    </div>
   )
 }
 
