@@ -90,21 +90,19 @@ const InnerScanTable = (props: Props) => {
   }, [height, sex, birth_date, datas])
 
   return (
-    <Stack direction="column" >
-     <Head>
-     </Head>
-      <Button onClick={toggleColorMode} fontSize={10}  size='sm' colorScheme='blue'>
-         {colorMode === 'light' ? 'Dark' : 'Light'}
+    <Stack direction="column"  padding={2} margin={1}>
+     <Head>Health Planet Dashboard for abe</Head>
+      <Button onClick={toggleColorMode} fontSize={13}  size='sm' colorScheme='blue'>
+        Health Planet Dashboard for abe
       </Button>
-      <h3>
-        <b>Health Planet Dashboard</b>
-      </h3>
       <Box fontSize={11}>
         身長 ：{Height}cm、性別 ：{Sex === 'male' ? '男性' : '女性'}、誕生日：
         {Birth_date}{' '}
       </Box>
       <Box p="4">
+        <Box>
         <LineChart data={data} sex={sex} />
+        </Box>
         <Text fontSize={11}>
           体脂肪率基準（40-59歳）：
           {Sex === 'male'
