@@ -4,8 +4,9 @@ import { GetServerSideProps } from 'next'
 import axios from 'axios'
 import querystring from 'query-string'
 import moment from 'moment'
-import { Box, Stack, Text } from '@chakra-ui/react'
+import { Box, Button, Stack, Text, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import LineChart from './LineChart'
+import Head from 'next/head'
 // import HPTbale from './HPTbale'
 
 // Helth Planet API 取得結果
@@ -37,7 +38,8 @@ const InnerScanTable = (props: Props) => {
   const [Sex, setSex] = useState<string>()
   const [Birth_date, setBirth_date] = useState<string>()
   const [data, setData] = useState<InnerScanOutData[]>([])
-
+  const { colorMode, toggleColorMode } = useColorMode()
+  
   useEffect(() => {
     const outputData: InnerScanOutData[] = datas
       .filter(
@@ -88,7 +90,12 @@ const InnerScanTable = (props: Props) => {
   }, [height, sex, birth_date, datas])
 
   return (
-    <Stack direction="column">
+    <Stack direction="column" >
+     <Head>
+     </Head>
+      <Button onClick={toggleColorMode} fontSize={10}  size='sm' colorScheme='blue'>
+         {colorMode === 'light' ? 'Dark' : 'Light'}
+      </Button>
       <h3>
         <b>Health Planet Dashboard</b>
       </h3>
