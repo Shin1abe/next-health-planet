@@ -99,10 +99,8 @@ const InnerScanTable = (props: Props) => {
         身長 ：{Height}cm、性別 ：{Sex === 'male' ? '男性' : '女性'}、誕生日：
         {Birth_date}{' '}
       </Box>
-      <Box p="4">
-        <Box>
+      <Box p="0" m="0">
         <LineChart data={data} sex={sex} />
-        </Box>
         <Text fontSize={11}>
           体脂肪率基準（40-59歳）：
           {Sex === 'male'
