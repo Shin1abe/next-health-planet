@@ -39,7 +39,8 @@ const InnerScanTable = (props: Props) => {
   const [Birth_date, setBirth_date] = useState<string>()
   const [data, setData] = useState<InnerScanOutData[]>([])
   const { colorMode, toggleColorMode } = useColorMode()
-  
+  const color = useColorModeValue("white", "gray.800")
+
   useEffect(() => {
     const outputData: InnerScanOutData[] = datas
       .filter(
@@ -92,7 +93,7 @@ const InnerScanTable = (props: Props) => {
   return (
     <Stack direction="column"  padding={2} margin={1}>
      <Head>Health Planet Dashboard for abe</Head>
-      <Button onClick={toggleColorMode} fontSize={13}  size='sm' colorScheme='blue'>
+      <Button onClick={toggleColorMode} fontSize={13}  size='sm' colorScheme='blue'  color={color}>
         Health Planet Dashboard for abe
       </Button>
       <Box fontSize={11}>

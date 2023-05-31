@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef } from 'react'
 import ReactECharts from 'echarts-for-react'
 import moment from 'moment'
 import { InnerScanOutData } from './InnerScanTable'
+import {  useColorModeValue } from '@chakra-ui/react'
 
 // propsの型を定義
 type Props = {
@@ -19,6 +20,7 @@ const LineChart: FC<Props> = (props) => {
   }
 
   const chartRef = useRef<HTMLDivElement>(null)
+  const color = useColorModeValue("black", "white")
 
   useEffect(() => {
     const resizeChart = () => {
@@ -92,6 +94,7 @@ const LineChart: FC<Props> = (props) => {
         alignTicks: true,
         scale: true,
         offset: 45,
+        // TODO:データの最小値を考慮した設定
         min: sex === 'male' ? 69 : 53,
         interval: 0.5,
         axisLabel: {
@@ -105,6 +108,7 @@ const LineChart: FC<Props> = (props) => {
         position: 'left',
         offset: -5,
         alignTicks: true,
+        // TODO:データの最小値を考慮した設定
         min: sex === 'male' ? 20 : 30,
         interval: 1,
         axisLabel: {
@@ -194,6 +198,9 @@ const LineChart: FC<Props> = (props) => {
         filterMode: 'filter',
       },
     ],
+    textStyle:{
+      color: color
+    }
   }
 
   return (
