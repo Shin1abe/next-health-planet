@@ -81,7 +81,10 @@ const LineChart: FC<Props> = (props) => {
       axisTick: {
         alignWithLabel: true,
       },
-    },
+      axisLabel: {
+        fontSize:11,
+      },
+  },
     yAxis: [
       {
         name: '体重',
@@ -89,32 +92,36 @@ const LineChart: FC<Props> = (props) => {
         position: 'left',
         alignTicks: true,
         scale: true,
+        offset: 45,
         min: sex === 'male' ? 69 : 53,
         interval: 0.5,
         axisLabel: {
-          formatter: '{value} kg',
+          formatter: '{value}kg',
+          fontSize:9,
         },
       },
       {
         name: '体脂肪率',
         type: 'value',
         position: 'left',
-        offset: 50,
+        offset: -5,
         alignTicks: true,
         min: sex === 'male' ? 20 : 30,
         interval: 1,
         axisLabel: {
-          formatter: '{value} %',
+          formatter: '{value}%',
+          fontSize:9,
         },
       },
       {
         name: '歩数',
         type: 'value',
-        offset: 5,
+        offset: -5,
         min: 3,
         interval: 5,
         axisLabel: {
-          formatter: '{value} ks',
+          formatter: '{value}ks',
+          fontSize:9,
         },
       },
     ],
@@ -191,7 +198,8 @@ const LineChart: FC<Props> = (props) => {
   }
 
   return (
-    <div ref={chartRef} style={{ overflowX: 'auto' }}>
+    // <div ref={chartRef} style={{ overflowX: 'auto' , display: 'flex', justifyContent: 'center' }}>
+    <div >
       <ReactECharts 
         option={options} 
         style={{ height: '400px', minWidth: '100%' }}
