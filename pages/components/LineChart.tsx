@@ -43,7 +43,6 @@ const LineChart: FC<Props> = (props) => {
     }
   }, [data])
 
-
   const options = {
     tooltip: {
       trigger: 'axis',
@@ -58,14 +57,14 @@ const LineChart: FC<Props> = (props) => {
         //   yAxisIndex: "none"
         // },
         dataView: {
-          readOnly: false
+          readOnly: false,
         },
         magicType: {
-          type: ["line", "bar"]
+          type: ['line', 'bar'],
         },
         // restore: {},
-        saveAsImage: {}
-      }
+        saveAsImage: {},
+      },
     },
     legend: {
       data: ['体重', '体脂肪率', '歩数'],
@@ -191,9 +190,10 @@ const LineChart: FC<Props> = (props) => {
   }
 
   return (
-    <div ref={chartRef} style={{ overflowX: 'auto' }}>
-      <ReactECharts 
-        option={options} 
+    // <div ref={chartRef} style={{ overflowX: 'auto' }}>
+    <div>
+      <ReactECharts
+        option={options}
         style={{ height: '400px', minWidth: '100%' }}
       />
     </div>
