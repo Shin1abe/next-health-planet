@@ -94,7 +94,7 @@ const LineChart: FC<Props> = (props) => {
         alignTicks: true,
         scale: true,
         offset: 45,
-        min:Math.min(...data.map(item => item.weight))-1,
+        min:data &&Math.min(...data.map(item => item.weight))-1,
         interval: 0.5,
         axisLabel: {
           formatter: '{value}kg',
@@ -107,7 +107,7 @@ const LineChart: FC<Props> = (props) => {
         position: 'left',
         offset: -5,
         alignTicks: true,
-        min:Math.min(...data.map(item => item.bodyFatPct))-1,
+        min:data &&Math.min(...data.map(item => item.bodyFatPct))-1,
         interval: 1,
         axisLabel: {
           formatter: '{value}%',
