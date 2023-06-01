@@ -40,6 +40,13 @@ const InnerScanTable = (props: Props) => {
   const [data, setData] = useState<InnerScanOutData[]>([])
   const { colorMode, toggleColorMode } = useColorMode()
   const color = useColorModeValue("white", "gray.800")
+  
+  const formatDate = (yyyymmdd: string): string => {
+    const year = yyyymmdd.slice(0, 4);
+    const month = yyyymmdd.slice(4, 6);
+    const day = yyyymmdd.slice(6, 8);
+    return `${year}/${month}/${day}`;
+  };
 
   useEffect(() => {
     const outputData: InnerScanOutData[] = datas
@@ -98,7 +105,7 @@ const InnerScanTable = (props: Props) => {
       </Button>
       <Box fontSize={11}>
         身長 ：{Height}cm、性別 ：{Sex === 'male' ? '男性' : '女性'}、誕生日：
-        {Birth_date}{' '}
+        {formatDate(Birth_date)}{' '}
       </Box>
       <Box p="0" m="0">
         <LineChart data={data} sex={sex} />

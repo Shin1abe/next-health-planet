@@ -94,8 +94,7 @@ const LineChart: FC<Props> = (props) => {
         alignTicks: true,
         scale: true,
         offset: 45,
-        // TODO:データの最小値を考慮した設定
-        min: sex === 'male' ? 69 : 53,
+        min:Math.min(...data.map(item => item.weight))-1,
         interval: 0.5,
         axisLabel: {
           formatter: '{value}kg',
@@ -108,8 +107,7 @@ const LineChart: FC<Props> = (props) => {
         position: 'left',
         offset: -5,
         alignTicks: true,
-        // TODO:データの最小値を考慮した設定
-        min: sex === 'male' ? 20 : 30,
+        min:Math.min(...data.map(item => item.bodyFatPct))-1,
         interval: 1,
         axisLabel: {
           formatter: '{value}%',
@@ -204,7 +202,6 @@ const LineChart: FC<Props> = (props) => {
   }
 
   return (
-    // <div ref={chartRef} style={{ overflowX: 'auto' , display: 'flex', justifyContent: 'center' }}>
     <div >
       <ReactECharts 
         option={options} 
