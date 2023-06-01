@@ -70,7 +70,7 @@ const LineChart: FC<Props> = (props) => {
     },
     legend: {
       data: ['体重', '体脂肪率', '歩数'],
-      left: 'auto',
+      center: 'auto',
     },
     xAxis: {
       type: 'category',
