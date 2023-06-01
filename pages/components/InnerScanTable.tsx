@@ -42,9 +42,9 @@ const InnerScanTable = (props: Props) => {
   const color = useColorModeValue("white", "gray.800")
   
   const formatDate = (yyyymmdd: string): string => {
-    const year = yyyymmdd.slice(0, 4);
-    const month = yyyymmdd.slice(4, 6);
-    const day = yyyymmdd.slice(6, 8);
+    const year = yyyymmdd?.slice(0, 4);
+    const month = yyyymmdd?.slice(4, 6);
+    const day = yyyymmdd?.slice(6, 8);
     return `${year}/${month}/${day}`;
   };
 
