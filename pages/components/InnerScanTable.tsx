@@ -216,6 +216,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     datas: mergedArr || null,
   }
 
+  console.log('getServerSideProps')
   return {
     props: props,
   }
