@@ -138,85 +138,36 @@ export default InnerScanTable
 //------------------------------------------------------------------------
 // サーバサイドで実行する処理(getServerSideProps)を定義
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log('getServerSideProps')
   // APIやDBからのデータ取得処理などを記載
   const accessToken = context.query.access_token
-  const today = moment().format('YYYYMMDDHHmmss')
-
-  // innerscanデータ取得
-  //apiへのリクエストパラメタ（6021 : 体重 (kg)、6022 : 体脂肪率 (%)）
-  const insRequestBody = {
-    access_token: accessToken,
-    date: 1,
-    to: today,
-    tag: '6021,6022',
+  const RequestBody = {
+    accessToken: accessToken,
   }
-
-  let innerscanRes: any
+  let res
   if (accessToken) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
     await axios
       .post(
-        'https://www.healthplanet.jp/status/innerscan.json',
-        querystring.stringify(insRequestBody),
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        }
+        'https://localhost/api/getHPData',
+        querystring.stringify(RequestBody)
       )
       .then((response) => {
-        innerscanRes = response
+        res = response
       })
       .catch((error) => {
         console.error(error)
       })
   }
 
-  // pedometerデータ取得
-  //apiへのリクエストパラメタ（6631 : 歩数（歩））
-  const pedRequestBody = {
-    access_token: accessToken,
-    date: 1,
-    to: today,
-    tag: '6631',
-  }
-
-  let pedRes: any
-  if (accessToken) {
-    await axios
-      .post(
-        'https://www.healthplanet.jp/status/pedometer.json',
-        querystring.stringify(pedRequestBody),
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        }
-      )
-      .then((response) => {
-        pedRes = response
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
-
-  // innerscanResとpemeterの結果をmerge
-  const mergedArr = [...innerscanRes.data.data, ...pedRes.data.data].reduce(
-    (acc, curr) => {
-      acc.push(curr)
-      return acc
-    },
-    []
-  )
-
+  const innerscanRes = res.data.innerscanRes
+  const mergedArr = res.data.mergedArr
   const props: Props = {
     height: innerscanRes?.data?.height || null,
     sex: innerscanRes?.data?.sex || null,
     birth_date: innerscanRes?.data?.birth_date || null,
     datas: mergedArr || null,
   }
-
-  console.log('getServerSideProps')
   return {
     props: props,
   }
