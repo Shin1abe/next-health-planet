@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { GetServerSideProps } from 'next'
 import axios from 'axios'
 import querystring from 'query-string'
-import moment from 'moment'
 import {
   Box,
   Button,
@@ -14,7 +13,8 @@ import {
 } from '@chakra-ui/react'
 import LineChart from './LineChart'
 import Head from 'next/head'
-// import HPTbale from './HPTbale'
+import { useRecoilState } from 'recoil'
+import { accessTokenState } from '../../components/atoms'
 
 // Helth Planet API 取得結果
 type InnerScanData = {
@@ -23,6 +23,7 @@ type InnerScanData = {
   model: string
   tag: string
 }
+
 // Helth Planet API 取得結果を画面出力
 export type InnerScanOutData = {
   date: string
@@ -35,17 +36,21 @@ export type Props = {
   height?: string
   sex?: string
   birth_date?: string
-  datas?: InnerScanData[]
+  isdatas?: InnerScanData[]
+  accesstoken?: string
 }
 const InnerScanTable = (props: Props) => {
   console.log('InnerScanTable')
-  const { height, sex, birth_date, datas } = props
+  const { height, sex, birth_date, isdatas, accesstoken } = props
+
   const [Height, setHeight] = useState<string>()
   const [Sex, setSex] = useState<string>()
   const [Birth_date, setBirth_date] = useState<string>()
-  const [data, setData] = useState<InnerScanOutData[]>([])
+  const [odata, setOData] = useState<InnerScanOutData[]>([])
+  const [isDatas, setIsDatas] = useState<InnerScanData[]>([])
+
   const { colorMode, toggleColorMode } = useColorMode()
-  const color = useColorModeValue('white', 'gray.800')
+  // const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
 
   const formatDate = (yyyymmdd: string): string => {
     const year = yyyymmdd?.slice(0, 4)
@@ -55,7 +60,15 @@ const InnerScanTable = (props: Props) => {
   }
 
   useEffect(() => {
-    const outputData: InnerScanOutData[] = datas
+    setIsDatas(isdatas)
+    //---------------------------
+    // const getData = async () => {
+    //   const resData = await getHPdata(accesstoken)
+    //   return resData.mergedArr
+    // }
+    // getData().then((d) => setIsDatas(d))
+    //---------------------------
+    const outputData: InnerScanOutData[] = isDatas
       .filter(
         (data) =>
           data.tag === '6021' || data.tag === '6022' || data.tag === '6331'
@@ -95,13 +108,12 @@ const InnerScanTable = (props: Props) => {
         }
         return acc
       }, [])
-    // sort
-    // .sort((a, b) => a.date.localeCompare(b.date))
-    setData(outputData)
+
+    setOData(outputData)
     setHeight(height)
     setSex(sex)
     setBirth_date(birth_date)
-  }, [height, sex, birth_date, datas])
+  }, [height, sex, birth_date, isDatas])
 
   return (
     <Stack direction="column" padding={2} margin={1}>
@@ -119,7 +131,7 @@ const InnerScanTable = (props: Props) => {
         {formatDate(Birth_date)}
       </Box>
       <Box p="0" m="0">
-        <LineChart data={data} sex={sex} />
+        <LineChart data={odata} sex={sex} />
         <Text fontSize={11}>
           体脂肪率基準（40-59歳）：
           {Sex === 'male'
@@ -127,29 +139,22 @@ const InnerScanTable = (props: Props) => {
             : '女（標準：22-28、標準+：29-35）'}
         </Text>
       </Box>
-      {/* <Box p="1" mt="1">
-        <HPTbale data={data} />
-      </Box> */}
     </Stack>
   )
 }
-
 export default InnerScanTable
 //------------------------------------------------------------------------
-// サーバサイドで実行する処理(getServerSideProps)を定義
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log('getServerSideProps')
-  // APIやDBからのデータ取得処理などを記載
-  const accessToken = context.query.access_token
-  const RequestBody = {
-    accessToken: accessToken,
-  }
+export const getHPdata = async (accessToken: string) => {
+  console.log('getHPdata')
+
+  const RequestBody = { accessToken: accessToken }
   let res
   if (accessToken) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
     await axios
       .post(
-        'https://localhost/api/getHPData',
+        `${process.env.NEXT_PUBLIC_HEALTHPLANET_URI}/api/getHPData`,
+        // '/api/getHPData',
         querystring.stringify(RequestBody)
       )
       .then((response) => {
@@ -159,14 +164,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         console.error(error)
       })
   }
-
   const innerscanRes = res.data.innerscanRes
   const mergedArr = res.data.mergedArr
+
+  return {
+    innerscanRes,
+    mergedArr,
+  }
+}
+
+//------------------------------------------------------------------------
+// サーバサイドで実行する処理(getServerSideProps)を定義
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log('getServerSideProps')
+  // APIやDBからのデータ取得処理などを記載
+  const accessToken = context.query.access_token as string
+
+  const resData = await getHPdata(accessToken)
+  const innerscanRes = resData.innerscanRes
+  const mergedArr = resData.mergedArr
+
   const props: Props = {
     height: innerscanRes?.data?.height || null,
     sex: innerscanRes?.data?.sex || null,
     birth_date: innerscanRes?.data?.birth_date || null,
-    datas: mergedArr || null,
+    isdatas: mergedArr || null,
+    accesstoken: accessToken || null,
   }
   return {
     props: props,

@@ -27,6 +27,7 @@ const callbackHandler: NextApiHandler = async (req, res) => {
         {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': '*',
           },
         }
       )
