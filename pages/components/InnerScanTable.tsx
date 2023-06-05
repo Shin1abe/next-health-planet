@@ -185,9 +185,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const mergedArr = resData.mergedArr
 
   const props: Props = {
-    height: innerscanRes?.data?.height || null,
-    sex: innerscanRes?.data?.sex || null,
-    birth_date: innerscanRes?.data?.birth_date || null,
+    height: innerscanRes?.height || null,
+    sex: innerscanRes?.sex || null,
+    birth_date: innerscanRes?.birth_date || null,
     isdatas: mergedArr || null,
     accesstoken: accessToken || null,
   }
