@@ -15,6 +15,7 @@ import LineChart from './LineChart'
 import Head from 'next/head'
 import { useRecoilState } from 'recoil'
 import { accessTokenState } from '../../components/atoms'
+import moment from 'moment'
 
 // Helth Planet API 取得結果
 type InnerScanData = {
@@ -180,18 +181,99 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // APIやDBからのデータ取得処理などを記載
   const accessToken = context.query.access_token as string
 
-  const resData = await getHPdata(accessToken)
-  const innerscanRes = resData.innerscanRes
-  const mergedArr = resData.mergedArr
+  const today = moment().format('YYYYMMDDHHmmss')
+
+  // innerscanデータ取得
+  //apiへのリクエストパラメタ（6021 : 体重 (kg)、6022 : 体脂肪率 (%)）
+  const insRequestBody = {
+    access_token: accessToken,
+    date: 1,
+    to: today,
+    tag: '6021,6022',
+  }
+
+  let innerscanRes: any
+  if (accessToken) {
+    await axios
+      .post(
+        'https://www.healthplanet.jp/status/innerscan.json',
+        querystring.stringify(insRequestBody),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      )
+      .then((response) => {
+        innerscanRes = response
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  // pedometerデータ取得
+  //apiへのリクエストパラメタ（6631 : 歩数（歩））
+  const pedRequestBody = {
+    access_token: accessToken,
+    date: 1,
+    to: today,
+    tag: '6631',
+  }
+
+  let pedRes: any
+  if (accessToken) {
+    await axios
+      .post(
+        'https://www.healthplanet.jp/status/pedometer.json',
+        querystring.stringify(pedRequestBody),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      )
+      .then((response) => {
+        pedRes = response
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  // innerscanResとpemeterの結果をmerge
+  const mergedArr = [...innerscanRes.data.data, ...pedRes.data.data].reduce(
+    (acc, curr) => {
+      acc.push(curr)
+      return acc
+    },
+    []
+  )
 
   const props: Props = {
-    height: innerscanRes?.height || null,
-    sex: innerscanRes?.sex || null,
-    birth_date: innerscanRes?.birth_date || null,
+    height: innerscanRes?.data?.height || null,
+    sex: innerscanRes?.data?.sex || null,
+    birth_date: innerscanRes?.data?.birth_date || null,
     isdatas: mergedArr || null,
     accesstoken: accessToken || null,
   }
+
+  console.log('getServerSideProps')
   return {
     props: props,
   }
+  // const resData = await getHPdata(accessToken)
+  // const innerscanRes = resData.innerscanRes
+  // const mergedArr = resData.mergedArr
+
+  // const props: Props = {
+  //   height: innerscanRes?.height || null,
+  //   sex: innerscanRes?.sex || null,
+  //   birth_date: innerscanRes?.birth_date || null,
+  //   isdatas: mergedArr || null,
+  //   accesstoken: accessToken || null,
+  // }
+  // return {
+  //   props: props,
+  // }
 }
