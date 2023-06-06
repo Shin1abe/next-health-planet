@@ -1,10 +1,14 @@
 import React from 'react'
 import { Box } from '@chakra-ui/react'
 import HPOAuth from './components/HPOAuth'
+import Head from 'next/head'
 
 const IndexPage = () => {
   return (
     <div>
+      <Head>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store" />
+      </Head>
       <Box>
         <HPOAuth />
         {/* <InnerScanTable /> */}

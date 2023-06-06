@@ -178,6 +178,9 @@ export const getHPdata = async (accessToken: string) => {
 // サーバサイドで実行する処理(getServerSideProps)を定義
 export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log('getServerSideProps')
+  // データ取得前にキャッシュをクリア
+  context.res.setHeader('Cache-Control', 'no-cache, no-store')
+
   // APIやDBからのデータ取得処理などを記載
   const accessToken = context.query.access_token as string
 
