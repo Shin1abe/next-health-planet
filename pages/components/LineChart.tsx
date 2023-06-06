@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef } from 'react'
 import ReactECharts from 'echarts-for-react'
 import moment from 'moment'
 import { InnerScanOutData } from './InnerScanTable'
-import {  useColorModeValue } from '@chakra-ui/react'
+import { useColorModeValue } from '@chakra-ui/react'
 
 // propsの型を定義
 type Props = {
@@ -20,7 +20,7 @@ const LineChart: FC<Props> = (props) => {
   }
 
   const chartRef = useRef<HTMLDivElement>(null)
-  const color = useColorModeValue("black", "white")
+  const color = useColorModeValue('black', 'white')
 
   useEffect(() => {
     const resizeChart = () => {
@@ -70,10 +70,10 @@ const LineChart: FC<Props> = (props) => {
     },
     legend: {
       data: ['体重', '体脂肪率', '歩数'],
-      left: 'auto',      
-      textStyle:{
-        color: color
-      }
+      left: 'auto',
+      textStyle: {
+        color: color,
+      },
     },
     xAxis: {
       type: 'category',
@@ -86,22 +86,31 @@ const LineChart: FC<Props> = (props) => {
         alignWithLabel: true,
       },
       axisLabel: {
-        fontSize:11,
+        fontSize: 11,
       },
-  },
+      splitLine: {
+        show: false,
+      },
+    },
     yAxis: [
       {
         name: '体重',
         type: 'value',
         position: 'left',
+        axisTick: {
+          show: false,
+        },
         alignTicks: true,
         scale: true,
         offset: 45,
-        min:data &&Math.min(...data.map(item => item.weight))-1,
+        min: data && Math.min(...data.map((item) => item.weight)) - 1,
         interval: 0.5,
         axisLabel: {
           formatter: '{value}kg',
-          fontSize:9,
+          fontSize: 9,
+        },
+        splitLine: {
+          show: false,
         },
       },
       {
@@ -110,11 +119,17 @@ const LineChart: FC<Props> = (props) => {
         position: 'left',
         offset: -5,
         alignTicks: true,
-        min:data &&Math.min(...data.map(item => item.bodyFatPct))-1,
+        min: data && Math.min(...data.map((item) => item.bodyFatPct)) - 1,
         interval: 1,
+        axisTick: {
+          show: false,
+        },
         axisLabel: {
           formatter: '{value}%',
-          fontSize:9,
+          fontSize: 9,
+        },
+        splitLine: {
+          show: true,
         },
       },
       {
@@ -123,9 +138,15 @@ const LineChart: FC<Props> = (props) => {
         offset: -5,
         min: 3,
         interval: 5,
+        axisTick: {
+          show: false,
+        },
         axisLabel: {
           formatter: '{value}ks',
-          fontSize:9,
+          fontSize: 9,
+        },
+        splitLine: {
+          show: false,
         },
       },
     ],
@@ -199,15 +220,15 @@ const LineChart: FC<Props> = (props) => {
         filterMode: 'filter',
       },
     ],
-    textStyle:{
-      color: color
-    }
+    textStyle: {
+      color: color,
+    },
   }
 
   return (
-    <div >
-      <ReactECharts 
-        option={options} 
+    <div>
+      <ReactECharts
+        option={options}
         style={{ height: '400px', minWidth: '100%' }}
       />
     </div>
