@@ -93,7 +93,8 @@ const InnerScanTable = (props: Props) => {
         }
         return output
       })
-      // 同一の日付データはまとめる
+    // 同一の日付データはまとめる
+    //TODO：現在は歩数=0、かつ、体重、体脂肪率は値ありの場合、本番環境で当日のグラフが表示されない
       .reduce((acc, curr) => {
         const existingData = acc.find(
           (data) => data.date.substring(0, 8) === curr.date.substring(0, 8)
