@@ -7,7 +7,7 @@ const IndexPage = () => {
   return (
     <div>
       <Head>
-        <meta http-equiv="Cache-Control" content="no-cache, no-store" />
+        <meta httpEquiv="Cache-Control" content="no-cache, no-store" />
       </Head>
       <Box>
         <HPOAuth />
