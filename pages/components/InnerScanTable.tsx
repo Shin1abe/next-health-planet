@@ -61,7 +61,7 @@ const InnerScanTable = (props: Props) => {
   }
 
   useEffect(() => {
-    setIsDatas(isdatas)
+    // setIsDatas(isdatas)
     //---------------------------
     // const getData = async () => {
     //   const resData = await getHPdata(accesstoken)
@@ -69,8 +69,9 @@ const InnerScanTable = (props: Props) => {
     // }
     // getData().then((d) => setIsDatas(d))
     //---------------------------
-    const outputData: InnerScanOutData[] = isDatas
-      .filter(
+    // const outputData: InnerScanOutData[] = isDatas
+    const outputData: InnerScanOutData[] = isdatas
+    .filter(
         (data) =>
           data.tag === '6021' || data.tag === '6022' || data.tag === '6331'
       )
@@ -114,7 +115,8 @@ const InnerScanTable = (props: Props) => {
     setHeight(height)
     setSex(sex)
     setBirth_date(birth_date)
-  }, [height, sex, birth_date, isDatas])
+  }, [height, sex, birth_date, isdatas])
+// }, [height, sex, birth_date, isDatas])
 
   return (
     <Stack direction="column" padding={2} margin={1}>
