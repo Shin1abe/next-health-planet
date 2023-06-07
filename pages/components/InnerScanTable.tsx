@@ -107,7 +107,10 @@ const InnerScanTable = (props: Props) => {
           existingData.steps =
             curr.steps !== 0 ? curr.steps : existingData.steps
         } else {
+          // TODO:weight,bodyFatPct,stepsがすべて0以外であればPUSHとすべき
+          if (!(curr.weight == 0 && curr.bodyFatPct == 0 && curr.steps == 0)) {
           acc.push(curr)
+          }
         }
         return acc
       }, [])
