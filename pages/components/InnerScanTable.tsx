@@ -204,6 +204,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+            'Cache-Control': 'no-cache', // NoCacheヘッダーを追加
           },
         }
       )
@@ -233,6 +234,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+            'Cache-Control': 'no-cache', // NoCacheヘッダーを追加
           },
         }
       )
