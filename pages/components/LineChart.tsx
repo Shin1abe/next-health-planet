@@ -102,7 +102,6 @@ const LineChart: FC<Props> = (props) => {
         },
         alignTicks: true,
         scale: true,
-        offset: 45,
         min: data && Math.min(...data.map((item) => item.weight)) - 1,
         interval: 0.5,
         axisLabel: {
@@ -116,8 +115,8 @@ const LineChart: FC<Props> = (props) => {
       {
         name: '体脂肪率',
         type: 'value',
-        position: 'left',
-        offset: -5,
+        position: 'right',
+        offset: 30,
         alignTicks: true,
         min: data && Math.min(...data.map((item) => item.bodyFatPct)) - 1,
         interval: 1,
@@ -135,7 +134,8 @@ const LineChart: FC<Props> = (props) => {
       {
         name: '歩数',
         type: 'value',
-        offset: -5,
+        position: 'left',
+        offset: 45,
         min: 3,
         interval: 5,
         axisTick: {
@@ -178,14 +178,6 @@ const LineChart: FC<Props> = (props) => {
             { type: 'min', name: 'Min' },
           ],
         },
-      },
-      {
-        type: 'bar',
-        name: '歩数',
-        data: data && data.map((item) => item.steps / 1000),
-        smooth: true,
-        xAxisIndex: 0,
-        yAxisIndex: 2,
         markLine: {
           data: [
             { type: 'average', name: 'Avg' },
@@ -207,6 +199,14 @@ const LineChart: FC<Props> = (props) => {
             ],
           ],
         },
+      },
+      {
+        type: 'bar',
+        name: '歩数',
+        data: data && data.map((item) => item.steps / 1000),
+        smooth: true,
+        xAxisIndex: 0,
+        yAxisIndex: 2,
       },
     ],
     dataZoom: [
