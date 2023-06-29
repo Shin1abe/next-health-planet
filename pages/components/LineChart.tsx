@@ -116,7 +116,7 @@ const LineChart: FC<Props> = (props) => {
         name: '体脂肪率',
         type: 'value',
         position: 'right',
-        offset: 30,
+        // offset: 30,
         alignTicks: true,
         min: data && Math.min(...data.map((item) => item.bodyFatPct)) - 1,
         interval: 1,
@@ -178,27 +178,27 @@ const LineChart: FC<Props> = (props) => {
             { type: 'min', name: 'Min' },
           ],
         },
-        markLine: {
-          data: [
-            { type: 'average', name: 'Avg' },
-            [
-              {
-                symbol: 'none',
-                x: 'max',
-                yAxis: 'min',
-              },
-              {
-                symbol: 'circle',
-                label: {
-                  position: 'start',
-                  formatter: 'min',
-                },
-                type: 'min',
-                name: '最低点',
-              },
-            ],
-          ],
-        },
+        // markLine: {
+        //   data: [
+        //     { type: 'average', name: 'Avg' },
+        //     [
+        //       {
+        //         symbol: 'none',
+        //         x: 'max',
+        //         yAxis: 'min',
+        //       },
+        //       {
+        //         symbol: 'circle',
+        //         label: {
+        //           position: 'start',
+        //           formatter: 'min',
+        //         },
+        //         type: 'min',
+        //         name: '最低点',
+        //       },
+        //     ],
+        //   ],
+        // },
       },
       {
         type: 'bar',
