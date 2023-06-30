@@ -18,6 +18,7 @@ const LineChart: FC<Props> = (props) => {
   if (data) {
     data.sort((a, b) => a.date.localeCompare(b.date))
   }
+  const threshold = sex === 'male' ? 17 : 28
 
   const chartRef = useRef<HTMLDivElement>(null)
   const color = useColorModeValue('black', 'white')
@@ -86,17 +87,20 @@ const LineChart: FC<Props> = (props) => {
         alignWithLabel: true,
       },
       axisLabel: {
-        fontSize: 11,
+        fontSize: 9,
       },
       splitLine: {
-        show: false,
+        show: true,
       },
+      boundaryGap: false, // x軸の始点と終点に空白を作らない
     },
     yAxis: [
+      // { type: 'value', min: 0, max: 500 },
       {
         name: '体重',
         type: 'value',
-        position: 'left',
+        position: 'right',
+        // position: 'left',
         axisTick: {
           show: false,
         },
@@ -115,11 +119,12 @@ const LineChart: FC<Props> = (props) => {
       {
         name: '体脂肪率',
         type: 'value',
-        position: 'right',
+        position: 'left',
+        // position: 'right',
         // offset: 30,
         alignTicks: true,
         min: data && Math.min(...data.map((item) => item.bodyFatPct)) - 1,
-        interval: 1,
+        interval: 5,
         axisTick: {
           show: false,
         },
@@ -151,6 +156,53 @@ const LineChart: FC<Props> = (props) => {
       },
     ],
     series: [
+      //
+      {
+        type: 'line',
+        data: data,
+        markLine: {
+          // 閾値を示す線を追加
+          data: [{ yAxis: threshold, label: { show: true } }],
+        },
+      },
+      {
+        type: 'line',
+        data: data,
+        xAxisIndex: 0,
+        yAxisIndex: 1,
+        areaStyle: {
+          // エリアチャートのスタイル設定
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: 'rgba(0, 128, 0, 0.3)' }, // エリアの開始地点の色と透明度
+              { offset: 1, color: 'rgba(0, 128, 0, 0)' }, // エリアの終点の色と透明度
+            ],
+          },
+        },
+        markArea: {
+          // エリアチャートの範囲を示すマークエリアを追加
+          data: [
+            [
+              {
+                yAxis: threshold, // 上限値
+                itemStyle: {
+                  color: 'rgba(255, 0, 0, 0.3)', // エリアの色と透明度
+                },
+              },
+              {
+                // yAxis: option.yAxis.max, // グラフの最大値（y軸の最大値）
+                yAxis: 100,
+              },
+            ],
+          ],
+        },
+      },
+      //
       {
         type: 'line',
         name: '体重',
@@ -165,6 +217,7 @@ const LineChart: FC<Props> = (props) => {
           ],
         },
       },
+
       {
         type: 'line',
         name: '体脂肪率',
