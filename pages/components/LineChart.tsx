@@ -191,7 +191,7 @@ const LineChart: FC<Props> = (props) => {
               {
                 yAxis: threshold, // 上限値
                 itemStyle: {
-                  color: 'rgba(255, 0, 0, 0.3)', // エリアの色と透明度
+                  color: 'rgba(255, 0, 0, 0.14)', // エリアの色と透明度
                 },
               },
               {
